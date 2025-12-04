@@ -1,0 +1,16 @@
+# Core Deep Learning
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Data Processing
+numpy<2.0
+h5py>=3.8.0
+scikit-learn>=1.2.0
+scikit-image>=0.20.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Utilities
+pillow>=9.5.0

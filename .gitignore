@@ -1,0 +1,53 @@
+# Data files
+data/*.h5
+data/*.hdf5
+*.h5
+*.hdf5
+
+# Model files (too large for GitHub)
+models/*.pth
+models/*.pt
+models/*.keras
+models/*.h5
+models/*.npy
+models/*.txt
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Results (optional - keep if you want to share)
+# results/*.png
+# results/*.txt
+# results/*.npy
+
+# Plots (optional - keep if you want to share)
+# plots/*.png

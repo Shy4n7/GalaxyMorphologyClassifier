@@ -1,0 +1,33 @@
+Galaxy10 Classification Report
+================================================================================
+
+                                  precision    recall  f1-score   support
+
+              Disturbed Galaxies     0.0000    0.0000    0.0000       162
+                Merging Galaxies     0.0000    0.0000    0.0000       278
+           Round Smooth Galaxies     0.1492    1.0000    0.2596       397
+In-between Round Smooth Galaxies     0.0000    0.0000    0.0000       304
+    Cigar Shaped Smooth Galaxies     0.0000    0.0000    0.0000        50
+          Barred Spiral Galaxies     0.0000    0.0000    0.0000       307
+  Unbarred Tight Spiral Galaxies     0.0000    0.0000    0.0000       274
+  Unbarred Loose Spiral Galaxies     0.0000    0.0000    0.0000       394
+  Edge-on Galaxies without Bulge     0.0000    0.0000    0.0000       214
+     Edge-on Galaxies with Bulge     0.0000    0.0000    0.0000       281
+
+                        accuracy                         0.1492      2661
+                       macro avg     0.0149    0.1000    0.0260      2661
+                    weighted avg     0.0223    0.1492    0.0387      2661
+
+
+Per-Class Accuracy:
+--------------------------------------------------------------------------------
+0: Disturbed Galaxies                            - 0.0000
+1: Merging Galaxies                              - 0.0000
+2: Round Smooth Galaxies                         - 1.0000
+3: In-between Round Smooth Galaxies              - 0.0000
+4: Cigar Shaped Smooth Galaxies                  - 0.0000
+5: Barred Spiral Galaxies                        - 0.0000
+6: Unbarred Tight Spiral Galaxies                - 0.0000
+7: Unbarred Loose Spiral Galaxies                - 0.0000
+8: Edge-on Galaxies without Bulge                - 0.0000
+9: Edge-on Galaxies with Bulge                   - 0.0000
