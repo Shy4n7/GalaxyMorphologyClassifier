@@ -247,8 +247,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Shyan**
 - GitHub: [@Shy4n7](https://github.com/Shy4n7)
-- LinkedIn: [Add your LinkedIn profile](https://linkedin.com/in/yourprofile)
-- Email: [Add your email]
+- Email: [shyanpaul7@gmail.com]
 
 ---
 
