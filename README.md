@@ -51,8 +51,8 @@ NVIDIA GPU with CUDA support (optional but recommended)
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/galaxy-morphology-classifier.git
-cd galaxy-morphology-classifier
+git clone https://github.com/Shy4n7/Galaxy_Morphology_Classifier.git
+cd Galaxy_Morphology_Classifier
 
 # Install dependencies
 pip install -r requirements.txt
@@ -245,10 +245,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-**[Your Name]**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
+**Shyan**
+- GitHub: [@Shy4n7](https://github.com/Shy4n7)
+- LinkedIn: [Add your LinkedIn profile](https://linkedin.com/in/yourprofile)
+- Email: [Add your email]
 
 ---
 
