@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardians of the Galaxy Classifier</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="particles-js"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <h1><strong>Galaxy Classifier</strong></h1>
+            </div>
+            <div class="status-panel">
+                <div class="status-item">
+                    <span class="material-icons">memory</span>
+                    <span id="gpu-status">GPU ACTIVE</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Input Section -->
+            <section class="panel input-panel">
+                <h2>Galaxy Input</h2>
+                <div class="upload-area" id="drop-zone">
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <div class="upload-content" id="upload-content">
+                        <span class="material-icons">cloud_upload</span>
+                        <p>Drag & Drop or Click to Upload</p>
+                    </div>
+                    <img id="preview-image" hidden>
+                    <div class="scan-line" id="scan-line" hidden></div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn btn-primary" id="random-btn">
+                        <span class="material-icons">shuffle</span> RANDOM GALAXY
+                    </button>
+                    <button class="btn btn-success" id="classify-btn" disabled>
+                        <span class="material-icons">play_arrow</span> RUN ENSEMBLE
+                    </button>
+                </div>
+
+                <div class="processing-info">
+                    <div class="info-row">
+                        <span>Preprocessing</span>
+                        <span class="status-ok">NORMALIZED</span>
+                    </div>
+                    <div class="info-row">
+                        <span>TTA (4 Views)</span>
+                        <span class="status-ok">ACTIVE</span>
+                    </div>
+                </div>
+
+                <!-- Sample Information (hidden by default) -->
+                <div class="sample-info-panel" id="sample-info-panel" hidden>
+                    <h3 class="sample-title">Dataset Sample</h3>
+                    <div class="sample-content">
+                        <div class="sample-image-container">
+                            <img id="sample-original-image" src="" alt="Original Sample">
+                            <span class="sample-caption">Original Image</span>
+                        </div>
+                        <div class="sample-metadata">
+                            <div class="metadata-row">
+                                <span class="metadata-label">True Label:</span>
+                                <span class="metadata-value" id="sample-class">---</span>
+                            </div>
+                            <div class="metadata-row">
+                                <span class="metadata-label">Filename:</span>
+                                <span class="metadata-value" id="sample-source">---</span>
+                            </div>
+                            <div class="metadata-row">
+                                <span class="metadata-label">Difficulty:</span>
+                                <span class="metadata-value" id="sample-type">---</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="panel results-panel">
+                <h2>Ensemble Analysis</h2>
+
+                <!-- Central Result -->
+                <div class="main-result">
+                    <div class="confidence-circle">
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="circle" id="confidence-stroke" stroke-dasharray="0, 100"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="percentage">
+                            <span id="confidence-value">0</span>%
+                        </div>
+                    </div>
+                    <div class="prediction-text">
+                        <h3 id="prediction-label">AWAITING INPUT</h3>
+                        <p>Ensemble Confidence</p>
+                    </div>
+                </div>
+
+                <!-- Ground Truth Validation (hidden by default) -->
+                <div class="validation-panel" id="validation-panel" hidden>
+                    <div class="validation-content">
+                        <div class="validation-row">
+                            <span class="validation-label">Ground Truth:</span>
+                            <span class="validation-value" id="ground-truth-label">---</span>
+                        </div>
+                        <div class="validation-row">
+                            <span class="validation-label">Result:</span>
+                            <span class="validation-result" id="validation-result">---</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Lab Grid View (Now default) -->
+                <div class="lab-grid" id="lab-grid-view">
+                    <div class="lab-header">
+                        <span>MODEL ARCHITECTURE</span>
+                        <span>CODENAME</span>
+                        <span>PREDICTION</span>
+                        <span>CONFIDENCE</span>
+                    </div>
+                    <div class="lab-row">
+                        <span>ResNet-50</span>
+                        <span class="text-red">STAR-LORD</span>
+                        <span id="lab-pred-resnet" class="lab-prediction">---</span>
+                        <span id="lab-score-resnet" class="mono">---</span>
+                    </div>
+                    <div class="lab-row">
+                        <span>DenseNet-121</span>
+                        <span class="text-green">GAMORA</span>
+                        <span id="lab-pred-densenet" class="lab-prediction">---</span>
+                        <span id="lab-score-densenet" class="mono">---</span>
+                    </div>
+                    <div class="lab-row">
+                        <span>EfficientNet B0 (V1)</span>
+                        <span class="text-slate">DRAX</span>
+                        <span id="lab-pred-effnet1" class="lab-prediction">---</span>
+                        <span id="lab-score-effnet1" class="mono">---</span>
+                    </div>
+                    <div class="lab-row">
+                        <span>EfficientNet B0 (V2)</span>
+                        <span class="text-orange">ROCKET</span>
+                        <span id="lab-pred-effnet2" class="lab-prediction">---</span>
+                        <span id="lab-score-effnet2" class="mono">---</span>
+                    </div>
+                    <div class="lab-row">
+                        <span>MobileNet V3</span>
+                        <span class="text-brown">GROOT</span>
+                        <span id="lab-pred-mobilenet" class="lab-prediction">---</span>
+                        <span id="lab-score-mobilenet" class="mono">---</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

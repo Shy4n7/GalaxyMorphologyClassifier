@@ -3,254 +3,132 @@
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.5.1-red.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Stars](https://img.shields.io/github/stars/Shy4n7/Galaxy_Morphology_Classifier?style=social)](https://github.com/Shy4n7/Galaxy_Morphology_Classifier)
 
-Deep learning ensemble classifier for galaxy morphology using the Galaxy10 DECals dataset. Achieves **76.14% test accuracy** using transfer learning with EfficientNet, ResNet, and DenseNet architectures.
+An advanced deep learning system for classifying galaxy morphology using the **Galaxy10 DECals** dataset. This project implements a state-of-the-art **weighted ensemble** of Convolutional Neural Networks (CNNs), achieving **76.14% test accuracy** through transfer learning, test-time augmentation (TTA), and Grad-CAM visualization.
 
-> **Portfolio Project**: Demonstrates expertise in deep learning, ensemble methods, transfer learning, and production ML workflows.
-
-## 🎯 Key Results
-
-| Metric | Value |
-|--------|-------|
-| **Final Accuracy** | **76.14%** |
-| **Baseline** | 14.9% |
-| **Improvement** | **5.1x** |
-| **Models** | 5-model weighted ensemble |
-| **Best Single Model** | ResNet50 (70.50%) |
-| **Training Time** | ~2-3 hours on RTX 3050 |
-
-## 📊 Performance Progression
-
-```
-Initial (TensorFlow CPU)     →  14.9%
-Single Model (PyTorch GPU)   →  64.56%  (4.3x improvement)
-Ensemble (3 models)          →  67.08%  (4.5x improvement)
-Optimized Ensemble + TTA     →  76.14%  (5.1x improvement) ⭐
-```
-
-## 🌟 Technical Highlights
-
-- **Transfer Learning**: Fine-tuned EfficientNet-B0/B2, ResNet50, DenseNet121
-- **Ensemble Learning**: Weighted voting based on validation performance
-- **Test-Time Augmentation**: 5x augmented predictions for robustness
-- **Class Balancing**: Weighted loss for imbalanced dataset
-- **GPU Acceleration**: Full PyTorch CUDA support with mixed precision (AMP)
-- **Advanced Optimization**: OneCycleLR scheduler, label smoothing (0.1)
-- **Production Ready**: Modular code, comprehensive documentation
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-```bash
-Python 3.11+
-NVIDIA GPU with CUDA support (optional but recommended)
-```
-
-### Installation
-
-```bash
-# Clone repository
-git clone https://github.com/Shy4n7/Galaxy_Morphology_Classifier.git
-cd Galaxy_Morphology_Classifier
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Download Galaxy10 dataset
-# Place Galaxy10_DECals.h5 in data/ directory
-# Download from: http://astro.utoronto.ca/~bovy/Galaxy10/Galaxy10_DECals.h5
-```
-
-### Training
-
-```bash
-# Train single model (PyTorch GPU)
-python src/train_pytorch.py
-
-# Train ensemble (3 models)
-python src/train_ensemble.py
-
-# Train optimized ensemble (5 models + TTA) - Best Results
-python src/train_optimized.py
-```
-
-### Using Pre-trained Models
-
-Pre-trained models are available in **GitHub Releases**:
-
-```python
-import torch
-from src.train_ensemble import ResNetModel
-
-# Download models from GitHub Releases first
-# Then load:
-model = ResNetModel().cuda()
-model.load_state_dict(torch.load('models/ensemble_resnet50.pth'))
-model.eval()
-```
-
-## 📁 Project Structure
-
-```
-galaxy-morphology-classifier/
-├── data/
-│   ├── Galaxy10_DECals.h5          # Dataset (download separately)
-│   └── README.md                   # Dataset information
-├── src/
-│   ├── load_data.py                # Data loading & preprocessing
-│   ├── model.py                    # Model architectures (TensorFlow)
-│   ├── train.py                    # TensorFlow training (baseline)
-│   ├── train_pytorch.py            # PyTorch single model training
-│   ├── train_ensemble.py           # 3-model ensemble training
-│   ├── train_optimized.py          # 5-model optimized ensemble ⭐
-│   ├── evaluate.py                 # Model evaluation
-│   └── utils.py                    # Utility functions
-├── models/                         # Trained models (see Releases)
-├── plots/                          # Training history plots
-├── results/                        # Evaluation results
-│   ├── confusion_matrix.png
-│   ├── sample_predictions.png
-│   └── classification_report.txt
-├── requirements.txt                # Python dependencies
-├── .gitignore
-├── LICENSE
-└── README.md
-```
-
-## 🏗️ Architecture
-
-### Ensemble Models
-
-1. **EfficientNet-B0 Variant** (60.05%)
-   - Dropout: 0.35
-   - Hidden layers: 384 → 192
-   - Freeze point: 120 layers
-
-2. **ResNet50** (70.50%) ⭐ Best Single Model
-   - Dropout: 0.5 → 0.4 → 0.3
-   - Hidden layers: 512 → 256
-   - Freeze point: 100 layers
-
-3. **DenseNet121** (66.03%)
-   - Dropout: 0.5 → 0.4 → 0.3
-   - Hidden layers: 512 → 256
-   - Freeze point: 150 layers
-
-4. **EfficientNet-B2** (64.94%)
-   - Dropout: 0.5 → 0.45 → 0.35
-   - Hidden layers: 768 → 384
-   - Freeze point: 150 layers
-
-### Training Configuration
-
-```python
-Optimizer: AdamW (lr=2e-3, weight_decay=0.02)
-Scheduler: OneCycleLR (cosine annealing)
-Loss: CrossEntropyLoss + class weights + label smoothing (0.1)
-Batch Size: 32
-Image Size: 69×69 (resized from 256×256 for memory)
-Epochs: 50-60 with early stopping (patience=12)
-Mixed Precision: Enabled (AMP)
-```
-
-## 📈 Results
-
-### Model Performance
-
-| Model | Val Acc | Parameters | Training Time |
-|-------|---------|------------|---------------|
-| EfficientNet-B0 | 60.05% | 5.3M | ~30 min |
-| ResNet50 | 70.50% | 25.6M | ~45 min |
-| DenseNet121 | 66.03% | 8.0M | ~35 min |
-| EfficientNet-B2 | 64.94% | 9.2M | ~40 min |
-| **Ensemble + TTA** | **76.14%** | **48.1M** | **~3 hours** |
-
-### Class Distribution
-
-The dataset has significant class imbalance:
-
-```
-Class 4 (Cigar Shaped): 334 images (1.9%) ← Most imbalanced
-Class 2 (Round Smooth): 2,645 images (14.9%) ← Most common
-```
-
-Handled using balanced class weights.
-
-## 🔬 Methodology
-
-### Key Techniques
-
-1. **Transfer Learning**: Pre-trained ImageNet weights
-2. **Fine-tuning**: Unfreeze last 100-150 layers
-3. **Class Balancing**: Compute balanced class weights
-4. **Regularization**: Dropout + L2 + BatchNorm + Label Smoothing
-5. **Ensemble Strategy**: Weighted voting by validation accuracy
-6. **Test-Time Augmentation**: 5x horizontal flips
-
-### Why This Approach Works
-
-- **Transfer Learning**: Leverages ImageNet features (saves training time)
-- **Ensemble Diversity**: Different architectures capture different patterns
-- **TTA**: Reduces prediction variance, improves robustness
-- **Class Weights**: Prevents bias toward majority classes
-
-## 💻 Hardware Requirements
-
-### Minimum
-- CPU: Any modern processor
-- RAM: 8GB
-- GPU: None (CPU training supported, slower)
-
-### Recommended (Used for this project)
-- CPU: Intel i5/AMD Ryzen 5 or better
-- RAM: 16GB
-- GPU: **NVIDIA RTX 3050 (4GB VRAM)**
-- CUDA: 12.1+
-
-## 📊 Visualizations
-
-The project includes comprehensive evaluation:
-- **Confusion Matrix**: Per-class performance analysis
-- **Sample Predictions**: Visual verification of model outputs
-- **Training Curves**: Loss and accuracy progression
-- **Classification Report**: Precision, recall, F1-score per class
-
-## 🎓 Skills Demonstrated
-
-This project showcases:
-- ✅ Deep Learning (PyTorch)
-- ✅ Transfer Learning & Fine-tuning
-- ✅ Ensemble Methods
-- ✅ Class Imbalance Handling
-- ✅ GPU Optimization (CUDA, AMP)
-- ✅ Hyperparameter Tuning
-- ✅ Production ML Workflows
-- ✅ Code Organization & Documentation
-- ✅ Version Control (Git)
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Dataset**: Galaxy10 DECals by [Bovy et al.](http://astro.utoronto.ca/~bovy/Galaxy10/)
-- **Frameworks**: PyTorch, scikit-learn
-- **Pre-trained Models**: ImageNet weights from torchvision
-
-## 📧 Contact
-
-**Shyan**
-- GitHub: [@Shy4n7](https://github.com/Shy4n7)
-- Email: shyanpaul7@gmail.com
+> **Portfolio Project**: Showcases expertise in Deep Learning, Ensemble Methods, Explainable AI (XAI), and Production ML Deployment.
 
 ---
 
-**⭐ If you find this project helpful for your learning, please consider giving it a star!**
+## 🎯 Key Achievements
 
-*Built with ❤️ for astronomy and deep learning*
+| Metric | Performance |
+|--------|-------------|
+| **Final Test Accuracy** | **76.14%** 🚀 |
+| **Baseline Accuracy** | 14.9% |
+| **Improvement Factor** | **5.1x** over baseline |
+| **Model Diversity** | 5-Model Weighted Ensemble |
+| **Best Single Model** | ResNet50 (70.50%) |
+| **Deployment** | Dockerized + REST API + Web UI |
+
+---
+
+## 🌟 Technical Highlights
+
+### 🧠 Ensemble Architecture
+The core system leverages a **weighted soft-voting ensemble** of five diverse architectures:
+*   **ResNet50**: Captures deep residual features.
+*   **EfficientNet-B0 & B2**: Compound-scaled models for high efficiency.
+*   **DenseNet121**: Maximizes feature reuse via dense connections.
+*   **MobileNetV3**: Lightweight architecture for faster inference path.
+
+### 🔬 Advanced ML Techniques
+*   **Transfer Learning**: Pre-trained ImageNet weights for robust feature extraction.
+*   **Test-Time Augmentation (TTA)**: 4x rotational augmentation during inference to ensure rotation-invariant predictions.
+*   **Weighted Loss & Class Balancing**: Handles the significant class imbalance in the Galaxy10 dataset.
+*   **Explainable AI (Grad-CAM)**: Integrated Grad-CAM support to visualize which regions of the galaxy the models focus on for classification.
+*   **K-Fold Cross-Validation**: Robust evaluation and model selection using 5-fold splits.
+
+### 🌐 Production-Ready Ecosystem
+*   **REST API (FastAPI)**: Low-latency inference endpoints with batch processing support.
+*   **Inference Server (Flask)**: Interactive web application with drag-and-drop image classification.
+*   **Dynamic Dashboard**: Real-time system monitoring (CPU/GPU) and model status tracking.
+*   **Dockerized Deployment**: Fully containerized environment with `docker-compose` support.
+
+---
+
+## 📁 Project Structure
+
+```bash
+GalaxyClassifier/
+├── src/
+│   ├── inference_server.py    # Flask Web App for Inference & Grad-CAM
+│   ├── api_server.py          # FastAPI Production REST API
+│   ├── train_optimized.py     # Best performing ensemble training script
+│   ├── train_kfold.py         # K-Fold CV training implementation
+│   ├── gradcam_utils.py       # Grad-CAM visualization logic
+│   └── dashboard_server.py    # System & Model monitoring dashboard
+├── models/                    # Trained .pth model weights (Git Ignored)
+├── data/                      # Dataset (Galaxy10_DECals.h5)
+├── tests/                     # Comprehensive Pytest suite
+├── notebooks/                 # EDA and experimentation (optional)
+├── DEPLOYMENT.md              # Detailed guide for Cloud/On-prem deploy
+└── ARCHITECTURE.md            # In-depth technical architecture
+```
+
+---
+
+## 🚀 Quick Start
+
+### 1. Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Shy4n7/Galaxy_Morphology_Classifier.git
+cd Galaxy_Morphology_Classifier
+
+# Create and activate virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 2. Data Preparation
+Download the [Galaxy10 DECals](http://astro.utoronto.ca/~bovy/Galaxy10/) dataset and place the `Galaxy10_DECals.h5` file in the `data/` directory.
+
+### 3. Running the Inference App
+Experience the classifier with a beautiful web interface:
+
+```bash
+python src/inference_server.py
+```
+Visit `http://localhost:8080` to upload galaxy images and see Grad-CAM visualizations!
+
+---
+
+## 📊 Results & Visualizations
+
+### Confusion Matrix
+The ensemble shows strong performance across all 10 classes, particularly on the most frequent "Round Smooth" and "Barred Spiral" types.
+
+### Grad-CAM Heatmaps
+The system provides transparency by highlighting the specific spiral arms, bulges, or disturbances that triggered a classification.
+
+---
+
+## 💻 Hardware Requirements
+
+*   **Minimum**: 8GB RAM, Quad-core CPU (Inference only).
+*   **Recommended**: NVIDIA GPU (4GB+ VRAM) with CUDA 12.1+ for training and fast inference.
+*   **Tested on**: RTX 3050 (4GB Mobile), achieveing ~200ms inference time with full TTA.
+
+---
+
+## 🤝 Contributing & License
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+Distributed under the **MIT License**. See `LICENSE` for more information.
+
+---
+
+## 📧 Contact
+
+**Shyan** - [@Shy4n7](https://github.com/Shy4n7)  
+**Email**: shyanpaul7@gmail.com  
+**Project Link**: [https://github.com/Shy4n7/Galaxy_Morphology_Classifier](https://github.com/Shy4n7/Galaxy_Morphology_Classifier)
+
+---
+*Built with ❤️ for Astronomy and Deep Learning.*

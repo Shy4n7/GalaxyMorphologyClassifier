@@ -1,0 +1,8 @@
+
+{
+  "name": "Ensemble Sandbox AI",
+  "description": "A sophisticated machine learning architecture visualization and ensemble synthesis platform with real-time analytics and AI-driven optimization suggestions.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

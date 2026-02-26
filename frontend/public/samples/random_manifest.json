@@ -1,0 +1,502 @@
+[
+  {
+    "src": "/samples/random/class_0_0.jpg",
+    "label": "Disturbed Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_0_1.jpg",
+    "label": "Disturbed Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_0_2.jpg",
+    "label": "Disturbed Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_0_3.jpg",
+    "label": "Disturbed Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_0_4.jpg",
+    "label": "Disturbed Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_0_5.jpg",
+    "label": "Disturbed Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_0_6.jpg",
+    "label": "Disturbed Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_0_7.jpg",
+    "label": "Disturbed Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_0_8.jpg",
+    "label": "Disturbed Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_0_9.jpg",
+    "label": "Disturbed Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_1_0.jpg",
+    "label": "Merging Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_1_1.jpg",
+    "label": "Merging Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_1_2.jpg",
+    "label": "Merging Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_1_3.jpg",
+    "label": "Merging Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_1_4.jpg",
+    "label": "Merging Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_1_5.jpg",
+    "label": "Merging Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_1_6.jpg",
+    "label": "Merging Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_1_7.jpg",
+    "label": "Merging Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_1_8.jpg",
+    "label": "Merging Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_1_9.jpg",
+    "label": "Merging Galaxies",
+    "type": "Difficult"
+  },
+  {
+    "src": "/samples/random/class_2_0.jpg",
+    "label": "Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_2_1.jpg",
+    "label": "Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_2_2.jpg",
+    "label": "Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_2_3.jpg",
+    "label": "Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_2_4.jpg",
+    "label": "Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_2_5.jpg",
+    "label": "Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_2_6.jpg",
+    "label": "Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_2_7.jpg",
+    "label": "Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_2_8.jpg",
+    "label": "Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_2_9.jpg",
+    "label": "Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_3_0.jpg",
+    "label": "In-between Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_3_1.jpg",
+    "label": "In-between Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_3_2.jpg",
+    "label": "In-between Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_3_3.jpg",
+    "label": "In-between Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_3_4.jpg",
+    "label": "In-between Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_3_5.jpg",
+    "label": "In-between Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_3_6.jpg",
+    "label": "In-between Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_3_7.jpg",
+    "label": "In-between Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_3_8.jpg",
+    "label": "In-between Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_3_9.jpg",
+    "label": "In-between Round Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_4_0.jpg",
+    "label": "Cigar Shaped Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_4_1.jpg",
+    "label": "Cigar Shaped Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_4_2.jpg",
+    "label": "Cigar Shaped Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_4_3.jpg",
+    "label": "Cigar Shaped Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_4_4.jpg",
+    "label": "Cigar Shaped Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_4_5.jpg",
+    "label": "Cigar Shaped Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_4_6.jpg",
+    "label": "Cigar Shaped Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_4_7.jpg",
+    "label": "Cigar Shaped Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_4_8.jpg",
+    "label": "Cigar Shaped Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_4_9.jpg",
+    "label": "Cigar Shaped Smooth Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_5_0.jpg",
+    "label": "Barred Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_5_1.jpg",
+    "label": "Barred Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_5_2.jpg",
+    "label": "Barred Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_5_3.jpg",
+    "label": "Barred Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_5_4.jpg",
+    "label": "Barred Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_5_5.jpg",
+    "label": "Barred Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_5_6.jpg",
+    "label": "Barred Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_5_7.jpg",
+    "label": "Barred Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_5_8.jpg",
+    "label": "Barred Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_5_9.jpg",
+    "label": "Barred Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_6_0.jpg",
+    "label": "Unbarred Tight Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_6_1.jpg",
+    "label": "Unbarred Tight Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_6_2.jpg",
+    "label": "Unbarred Tight Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_6_3.jpg",
+    "label": "Unbarred Tight Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_6_4.jpg",
+    "label": "Unbarred Tight Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_6_5.jpg",
+    "label": "Unbarred Tight Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_6_6.jpg",
+    "label": "Unbarred Tight Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_6_7.jpg",
+    "label": "Unbarred Tight Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_6_8.jpg",
+    "label": "Unbarred Tight Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_6_9.jpg",
+    "label": "Unbarred Tight Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_7_0.jpg",
+    "label": "Unbarred Loose Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_7_1.jpg",
+    "label": "Unbarred Loose Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_7_2.jpg",
+    "label": "Unbarred Loose Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_7_3.jpg",
+    "label": "Unbarred Loose Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_7_4.jpg",
+    "label": "Unbarred Loose Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_7_5.jpg",
+    "label": "Unbarred Loose Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_7_6.jpg",
+    "label": "Unbarred Loose Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_7_7.jpg",
+    "label": "Unbarred Loose Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_7_8.jpg",
+    "label": "Unbarred Loose Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_7_9.jpg",
+    "label": "Unbarred Loose Spiral Galaxies",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_8_0.jpg",
+    "label": "Edge-on Galaxies without Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_8_1.jpg",
+    "label": "Edge-on Galaxies without Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_8_2.jpg",
+    "label": "Edge-on Galaxies without Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_8_3.jpg",
+    "label": "Edge-on Galaxies without Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_8_4.jpg",
+    "label": "Edge-on Galaxies without Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_8_5.jpg",
+    "label": "Edge-on Galaxies without Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_8_6.jpg",
+    "label": "Edge-on Galaxies without Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_8_7.jpg",
+    "label": "Edge-on Galaxies without Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_8_8.jpg",
+    "label": "Edge-on Galaxies without Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_8_9.jpg",
+    "label": "Edge-on Galaxies without Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_9_0.jpg",
+    "label": "Edge-on Galaxies with Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_9_1.jpg",
+    "label": "Edge-on Galaxies with Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_9_2.jpg",
+    "label": "Edge-on Galaxies with Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_9_3.jpg",
+    "label": "Edge-on Galaxies with Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_9_4.jpg",
+    "label": "Edge-on Galaxies with Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_9_5.jpg",
+    "label": "Edge-on Galaxies with Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_9_6.jpg",
+    "label": "Edge-on Galaxies with Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_9_7.jpg",
+    "label": "Edge-on Galaxies with Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_9_8.jpg",
+    "label": "Edge-on Galaxies with Bulge",
+    "type": "Normal"
+  },
+  {
+    "src": "/samples/random/class_9_9.jpg",
+    "label": "Edge-on Galaxies with Bulge",
+    "type": "Normal"
+  }
+]

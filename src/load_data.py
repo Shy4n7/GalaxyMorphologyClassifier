@@ -40,22 +40,33 @@ def load_galaxy10_data(filepath='data/Galaxy10_DECals.h5', test_size=0.15, val_s
     
     # Load h5 file
     with h5py.File(filepath, 'r') as f:
-        # Extract images and labels
-        images = np.array(f['images'])
+        # Extract labels
         labels = np.array(f['ans'])
-    
-    print(f"Loaded {len(images)} images with shape {images.shape}")
-    
-    # Resize images to 69x69 if they're larger (to save memory)
-    if images.shape[1] != 69 or images.shape[2] != 69:
-        print(f"Resizing images from {images.shape[1]}x{images.shape[2]} to 69x69...")
+        num_samples = len(labels)
+        
+        print(f"Loading and resizing {num_samples} images to 69x69...")
         from skimage.transform import resize
-        resized_images = np.zeros((len(images), 69, 69, 3), dtype=np.float32)
-        for i in range(len(images)):
-            resized_images[i] = resize(images[i], (69, 69, 3), anti_aliasing=True, preserve_range=True)
-        images = resized_images
-        print(f"Resized to shape: {images.shape}")
+        
+        # Initialize as uint8 to save 4x memory vs float32
+        images_resized = np.zeros((num_samples, 69, 69, 3), dtype=np.uint8)
+        
+        chunk_size = 500
+        for i in range(0, num_samples, chunk_size):
+            end = min(i + chunk_size, num_samples)
+            # Read chunk from HDF5
+            chunk = f['images'][i:end]
+            # Resize each image
+            for j in range(len(chunk)):
+                images_resized[i + j] = resize(chunk[j], (69, 69, 3), 
+                                             anti_aliasing=True, 
+                                             preserve_range=True,
+                                             order=1).astype(np.uint8)
+            if (i // chunk_size) % 5 == 0:
+                print(f"  Processed {end}/{num_samples} images...")
+        
+        images = images_resized
     
+    print(f"Loaded and resized to shape: {images.shape}")
     print(f"Label distribution: {np.bincount(labels)}")
     
     # Normalize pixel values to [0, 1]

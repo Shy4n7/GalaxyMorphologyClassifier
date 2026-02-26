@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Morphology Classifier - AI Inference</title>
+    <link rel="stylesheet" href="inference_style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="stars-background"></div>
+
+    <header>
+        <div class="logo-section">
+            <div class="ai-indicator"></div>
+            <h1>GALAXY <span class="highlight">CLASSIFIER</span></h1>
+        </div>
+        <div class="status-badge" id="status-badge">
+            <span class="status-dot"></span>
+            <span id="status-text">Ready</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Upload Section -->
+            <section class="upload-section glass-card">
+                <div class="section-header">
+                    <h2>Upload Galaxy Image</h2>
+                    <p class="subtitle">Upload an image to classify its morphology using our AI ensemble</p>
+                </div>
+
+                <div class="upload-area" id="upload-area">
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <div class="upload-content">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <h3>Drop image here or click to browse</h3>
+                        <p>Supports JPG, PNG, FITS (converted)</p>
+                    </div>
+                    <div class="preview-container" id="preview-container" style="display: none;">
+                        <img id="preview-image" alt="Preview">
+                        <button class="remove-btn" id="remove-btn">X</button>
+                    </div>
+                </div>
+
+                <button class="classify-btn" id="classify-btn" disabled>
+                    <span class="btn-text">Classify Galaxy</span>
+                    <span class="btn-loader" style="display: none;"></span>
+                </button>
+            </section>
+
+            <!-- Sample Gallery Section -->
+            <section class="samples-section glass-card">
+                <div class="section-header">
+                    <h2>Try Sample Images</h2>
+                    <p class="subtitle">Click any sample to classify it instantly</p>
+                </div>
+                <div class="samples-grid">
+                    <div class="sample-item"
+                        onclick="loadSample('samples/sample_1_Disturbed.jpg', 'Disturbed Galaxies')">
+                        <img src="samples/sample_1_Disturbed.jpg" alt="Disturbed Galaxy">
+                        <span class="sample-label">Disturbed</span>
+                    </div>
+                    <div class="sample-item" onclick="loadSample('samples/sample_2_Merging.jpg', 'Merging Galaxies')">
+                        <img src="samples/sample_2_Merging.jpg" alt="Merging Galaxy">
+                        <span class="sample-label">Merging</span>
+                    </div>
+                    <div class="sample-item" onclick="loadSample('samples/sample_3_Round_Smooth.jpg', 'Round Smooth')">
+                        <img src="samples/sample_3_Round_Smooth.jpg" alt="Round Smooth Galaxy">
+                        <span class="sample-label">Round Smooth</span>
+                    </div>
+                    <div class="sample-item"
+                        onclick="loadSample('samples/sample_6_Barred_Spiral.jpg', 'Barred Spiral')">
+                        <img src="samples/sample_6_Barred_Spiral.jpg" alt="Barred Spiral Galaxy">
+                        <span class="sample-label">Barred Spiral</span>
+                    </div>
+                    <div class="sample-item"
+                        onclick="loadSample('samples/sample_7_Unbarred_Tight_Spiral.jpg', 'Unbarred Tight Spiral')">
+                        <img src="samples/sample_7_Unbarred_Tight_Spiral.jpg" alt="Unbarred Tight Spiral">
+                        <span class="sample-label">Tight Spiral</span>
+                    </div>
+                    <div class="sample-item"
+                        onclick="loadSample('samples/sample_9_Edge_on_without_Bulge.jpg', 'Edge-on without Bulge')">
+                        <img src="samples/sample_9_Edge_on_without_Bulge.jpg" alt="Edge-on Galaxy">
+                        <span class="sample-label">Edge-on</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Model Visualization Section -->
+            <section class="model-viz-section glass-card">
+                <div class="section-header">
+                    <h2>How the Ensemble Works</h2>
+                    <p class="subtitle">4 deep learning models work together for accurate classification</p>
+                </div>
+                <div class="model-flow">
+                    <div class="flow-step">
+                        <div class="step-box input-box">
+                            <h4>Input Image</h4>
+                            <p>69x69 RGB Galaxy</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="models-parallel">
+                            <div class="step-box model-box">
+                                <h4>ResNet-50</h4>
+                                <p>Deep residual network</p>
+                            </div>
+                            <div class="step-box model-box">
+                                <h4>DenseNet-121</h4>
+                                <p>Dense connections</p>
+                            </div>
+                            <div class="step-box model-box">
+                                <h4>EfficientNet-B0 V1</h4>
+                                <p>Efficient scaling</p>
+                            </div>
+                            <div class="step-box model-box">
+                                <h4>EfficientNet-B0 V2</h4>
+                                <p>Efficient scaling</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-box ensemble-box">
+                            <h4>Ensemble Voting</h4>
+                            <p>Average predictions</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <div class="step-box output-box">
+                            <h4>Final Prediction</h4>
+                            <p>Galaxy classification</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="model-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">76.14%</span>
+                        <span class="stat-label">Ensemble Accuracy</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">4</span>
+                        <span class="stat-label">Models</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">10</span>
+                        <span class="stat-label">Galaxy Classes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">17K+</span>
+                        <span class="stat-label">Training Images</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section glass-card" id="results-section" style="display: none;">
+                <div class="section-header">
+                    <h2>Classification Results</h2>
+                    <p class="subtitle">AI Ensemble Prediction</p>
+                </div>
+
+                <!-- Main Prediction -->
+                <div class="main-prediction">
+                    <div class="prediction-label">Predicted Class</div>
+                    <h3 class="prediction-class" id="prediction-class">-</h3>
+                    <div class="confidence-container">
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidence-fill"></div>
+                        </div>
+                        <span class="confidence-text" id="confidence-text">0%</span>
+                    </div>
+                </div>
+
+                <!-- Top 3 Predictions -->
+                <div class="top-predictions">
+                    <h4>Top 3 Predictions</h4>
+                    <div class="predictions-list" id="top3-list"></div>
+                </div>
+
+                <!-- Individual Models -->
+                <div class="model-breakdown">
+                    <h4>Individual Model Predictions</h4>
+                    <div class="models-grid" id="models-grid"></div>
+                </div>
+
+                <!-- Probability Distribution -->
+                <div class="probability-chart">
+                    <h4>Probability Distribution</h4>
+                    <div class="chart-bars" id="chart-bars"></div>
+                </div>
+
+                <div class="gradcam-container">
+                    <button class="gradcam-btn" id="gradcam-btn" onclick="showGradCAM()">
+                        Show What AI Sees
+                    </button>
+                    <p class="gradcam-description">
+                        Visualize which parts of the galaxy image each model focuses on
+                    </p>
+                </div>
+            </section>
+
+            <!-- Grad-CAM Results Section -->
+            <section class="gradcam-section glass-card" id="gradcam-section" style="display: none;">
+                <div class="section-header">
+                    <h2>Explainability Visualization</h2>
+                    <p class="subtitle">Heatmaps showing where each model focuses attention</p>
+                </div>
+                <div class="gradcam-image-container">
+                    <img id="gradcam-image" alt="Grad-CAM Visualization">
+                    <p class="gradcam-note">
+                        Red/yellow areas indicate regions the models focus on most for classification.
+                        Each panel shows a different model's attention pattern.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Info Section -->
+            <section class="info-section glass-card">
+                <div class="section-header">
+                    <h2>About This Classifier</h2>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-icon">●</div>
+                        <h4>76.14% Accuracy</h4>
+                        <p>Ensemble of 4 deep learning models</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">●</div>
+                        <h4>Transfer Learning</h4>
+                        <p>ResNet50, DenseNet121, EfficientNet</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">●</div>
+                        <h4>10 Galaxy Types</h4>
+                        <p>Trained on Galaxy10 DECals dataset</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">●</div>
+                        <h4>Real-time Inference</h4>
+                        <p>GPU-accelerated predictions</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>Built for astronomy and deep learning | Galaxy10 DECals Dataset</p>
+    </footer>
+
+    <script src="particles.js"></script>
+    <script src="inference_app.js"></script>
+</body>
+
+</html>
