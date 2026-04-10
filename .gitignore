@@ -1,0 +1,37 @@
+# Data
+data/*.h5
+data/*.hdf5
+
+# Model weights
+models/*.pth
+models/*.pt
+models/*.h5
+models/*.keras
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs / results
+logs/
+*.log
+results/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/

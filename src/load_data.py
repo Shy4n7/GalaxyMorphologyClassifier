@@ -1,0 +1,121 @@
+"""
+Data loading module for Galaxy10 dataset.
+Loads galaxy10.h5 file and prepares train/val/test splits.
+"""
+
+import h5py
+import numpy as np
+from sklearn.model_selection import train_test_split
+
+# Galaxy10 class names (10 classes)
+CLASS_NAMES = [
+    'Disturbed Galaxies',
+    'Merging Galaxies',
+    'Round Smooth Galaxies',
+    'In-between Round Smooth Galaxies',
+    'Cigar Shaped Smooth Galaxies',
+    'Barred Spiral Galaxies',
+    'Unbarred Tight Spiral Galaxies',
+    'Unbarred Loose Spiral Galaxies',
+    'Edge-on Galaxies without Bulge',
+    'Edge-on Galaxies with Bulge'
+]
+
+
+def load_galaxy10_data(filepath='data/Galaxy10_DECals.h5', test_size=0.15, val_size=0.15, random_state=42):
+    """
+    Load Galaxy10 dataset from h5 file and split into train/val/test sets.
+    
+    Args:
+        filepath (str): Path to galaxy10.h5 file
+        test_size (float): Proportion of data for test set (default: 0.15)
+        val_size (float): Proportion of data for validation set (default: 0.15)
+        random_state (int): Random seed for reproducibility
+        
+    Returns:
+        tuple: (X_train, X_val, X_test, y_train, y_val, y_test)
+               All arrays are numpy arrays with normalized images (0-1) and int64 labels
+    """
+    print(f"Loading data from {filepath}...")
+    
+    # Load h5 file
+    with h5py.File(filepath, 'r') as f:
+        # Extract labels
+        labels = np.array(f['ans'])
+        num_samples = len(labels)
+        
+        print(f"Loading and resizing {num_samples} images to 69x69...")
+        from skimage.transform import resize
+        
+        # Initialize as uint8 to save 4x memory vs float32
+        images_resized = np.zeros((num_samples, 69, 69, 3), dtype=np.uint8)
+        
+        chunk_size = 500
+        for i in range(0, num_samples, chunk_size):
+            end = min(i + chunk_size, num_samples)
+            # Read chunk from HDF5
+            chunk = f['images'][i:end]
+            # Resize each image
+            for j in range(len(chunk)):
+                images_resized[i + j] = resize(chunk[j], (69, 69, 3), 
+                                             anti_aliasing=True, 
+                                             preserve_range=True,
+                                             order=1).astype(np.uint8)
+            if (i // chunk_size) % 5 == 0:
+                print(f"  Processed {end}/{num_samples} images...")
+        
+        images = images_resized
+    
+    print(f"Loaded and resized to shape: {images.shape}")
+    print(f"Label distribution: {np.bincount(labels)}")
+    
+    # Keep images as uint8 (0-255) to conserve memory.
+    # Models will handle rescaling (EfficientNet has internal rescaling, CNN will use a Rescaling layer).
+    
+    # Convert labels to int64
+    labels = labels.astype('int64')
+    
+    # First split: separate test set (15%)
+    X_temp, X_test, y_temp, y_test = train_test_split(
+        images, labels, 
+        test_size=test_size, 
+        random_state=random_state,
+        stratify=labels
+    )
+    
+    # Second split: separate validation set from remaining data
+    # val_size_adjusted ensures validation is 15% of total data
+    val_size_adjusted = val_size / (1 - test_size)
+    X_train, X_val, y_train, y_val = train_test_split(
+        X_temp, y_temp,
+        test_size=val_size_adjusted,
+        random_state=random_state,
+        stratify=y_temp
+    )
+    
+    print(f"\nData split complete:")
+    print(f"  Training set:   {len(X_train)} samples ({len(X_train)/len(images)*100:.1f}%)")
+    print(f"  Validation set: {len(X_val)} samples ({len(X_val)/len(images)*100:.1f}%)")
+    print(f"  Test set:       {len(X_test)} samples ({len(X_test)/len(images)*100:.1f}%)")
+    
+    return X_train, X_val, X_test, y_train, y_val, y_test
+
+
+def get_class_names():
+    """
+    Returns the list of Galaxy10 class names.
+    
+    Returns:
+        list: List of 10 galaxy class names
+    """
+    return CLASS_NAMES
+
+
+if __name__ == "__main__":
+    # Test data loading
+    X_train, X_val, X_test, y_train, y_val, y_test = load_galaxy10_data()
+    print(f"\nData shapes:")
+    print(f"  X_train: {X_train.shape}, y_train: {y_train.shape}")
+    print(f"  X_val: {X_val.shape}, y_val: {y_val.shape}")
+    print(f"  X_test: {X_test.shape}, y_test: {y_test.shape}")
+    print(f"\nClass names: {get_class_names()}")
