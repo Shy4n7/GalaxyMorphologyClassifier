@@ -358,13 +358,13 @@ const App: React.FC = () => {
 
       {/* View Mode Tabs */}
       <div className="flex justify-center gap-1 pb-2 z-50">
-        {(['SANDBOX', 'LAB_GRID', 'ANALYTICS'] as ViewMode[]).map(v => (
+        {([['SANDBOX', 'Classify'], ['LAB_GRID', 'Lab Grid'], ['ANALYTICS', 'Analytics']] as [ViewMode, string][]).map(([v, label]) => (
           <button
             key={v}
             onClick={() => setViewMode(v)}
             className={`px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-full transition-all ${viewMode === v ? 'bg-primary text-white' : 'text-slate-500 hover:text-white'}`}
           >
-            {v.replace('_', ' ')}
+            {label}
           </button>
         ))}
       </div>
