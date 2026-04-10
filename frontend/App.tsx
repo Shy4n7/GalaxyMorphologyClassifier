@@ -86,6 +86,10 @@ const App: React.FC = () => {
           </div>
         </div>
 
+        <div className="flex items-center gap-10 text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-400">
+          <span className="text-primary cursor-default">Classify</span>
+        </div>
+
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400">
             <span className="text-slate-500">Ensemble</span>
