@@ -138,27 +138,19 @@ function displayResults(data) {
     const offset = 100 - data.confidence;
     circle.style.strokeDasharray = `${data.confidence}, 100`;
 
-    // Lab Grid Mapping (Guardian mode removed)
+    // Lab Grid Mapping — 3-model ensemble
     const models = {
-        'resnet50': {
-            scoreId: 'lab-score-resnet',
-            predId: 'lab-pred-resnet'
+        'convnext': {
+            scoreId: 'lab-score-convnext',
+            predId: 'lab-pred-convnext'
         },
-        'densenet121': {
-            scoreId: 'lab-score-densenet',
-            predId: 'lab-pred-densenet'
+        'resnext50': {
+            scoreId: 'lab-score-resnext50',
+            predId: 'lab-pred-resnext50'
         },
-        'efficientnet_b0_v1': {
-            scoreId: 'lab-score-effnet1',
-            predId: 'lab-pred-effnet1'
-        },
-        'efficientnet_b0_v2': {
-            scoreId: 'lab-score-effnet2',
-            predId: 'lab-pred-effnet2'
-        },
-        'mobilenet_v3': {
-            scoreId: 'lab-score-mobilenet',
-            predId: 'lab-pred-mobilenet'
+        'densenet161': {
+            scoreId: 'lab-score-densenet161',
+            predId: 'lab-pred-densenet161'
         }
     };
 
@@ -198,8 +190,8 @@ function resetResults() {
     document.getElementById('prediction-label').textContent = 'AWAITING INPUT';
     document.querySelector('.circle').style.strokeDasharray = '0, 100';
 
-    ['lab-score-resnet', 'lab-score-densenet', 'lab-score-effnet1', 'lab-score-effnet2', 'lab-score-mobilenet',
-        'lab-pred-resnet', 'lab-pred-densenet', 'lab-pred-effnet1', 'lab-pred-effnet2', 'lab-pred-mobilenet']
+    ['lab-score-convnext', 'lab-score-resnext50', 'lab-score-densenet161',
+        'lab-pred-convnext', 'lab-pred-resnext50', 'lab-pred-densenet161']
         .forEach(id => {
             const el = document.getElementById(id);
             if (el) el.textContent = '---';

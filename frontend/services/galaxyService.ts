@@ -1,6 +1,6 @@
 // Galaxy Classifier API Service
 
-const API_BASE_URL = 'http://localhost:5001';
+const API_BASE_URL = 'http://localhost:8080';
 
 export interface PredictionResponse {
     prediction: string;
