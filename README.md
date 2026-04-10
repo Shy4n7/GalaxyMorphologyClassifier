@@ -69,15 +69,14 @@ Weights save to `models/best_v3_{model}_{size}_{timestamp}.pth`.
 
 ---
 
-## Inference Server
+## Running
 
+**API server** (port 8000):
 ```bash
-python src/inference_server.py
+python -m src.api
 ```
 
-Runs at `http://localhost:8080`. Loads all 3 ensemble models automatically from `models/`.
-
-**Endpoints:**
+Loads all 3 ensemble models automatically from `models/`.
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -86,13 +85,12 @@ Runs at `http://localhost:8080`. Loads all 3 ensemble models automatically from 
 | `/api/health` | GET | Model load status |
 | `/api/gpu-stats` | GET | GPU memory usage |
 
----
-
-## Docker
-
+**Web UI** (port 3000):
 ```bash
-docker-compose up --build
+cd frontend && npm install && npm run dev
 ```
+
+Open `http://localhost:3000`.
 
 ---
 
@@ -100,12 +98,12 @@ docker-compose up --build
 
 ```
 src/
+  api.py                  # FastAPI inference server (port 8000)
   train_optimized_v3.py   # Training (all 3 models)
-  inference_server.py     # Flask ensemble server + Grad-CAM
   load_data.py            # HDF5 loading, uint8 RAM caching
-  gradcam_utils.py        # Grad-CAM visualization
-  static/                 # Web UI
-  dashboard/              # Monitoring dashboard
+frontend/
+  App.tsx                 # React classifier UI (port 3000)
+  components/             # ModelCard, EnsembleFeed
 models/
   best_v3_convnext_224_*.pth
   best_v3_resnext50_224_*.pth

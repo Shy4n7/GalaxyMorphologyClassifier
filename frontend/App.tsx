@@ -4,7 +4,7 @@ import EnsembleFeed from './components/EnsembleFeed';
 import { INITIAL_MODELS } from './constants';
 import { ModelConfig, GalaxyPrediction, GradCAMData } from './types';
 
-const API = 'http://localhost:8080';
+const API = 'http://localhost:8000';
 
 const App: React.FC = () => {
   const [models] = useState<ModelConfig[]>(INITIAL_MODELS);
