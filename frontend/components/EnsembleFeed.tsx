@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { GalaxyPrediction, GradCAMData } from '../types';
 
@@ -8,25 +9,25 @@ interface EnsembleFeedProps {
   showGradCAM?: boolean;
 }
 
-const MODEL_INDICATORS = [
-  { key: 'convnext',   label: 'ConvNeXt',  color: 'bg-red-500' },
-  { key: 'resnext50',  label: 'ResNeXt',   color: 'bg-emerald-500' },
-  { key: 'densenet161',label: 'DenseNet',  color: 'bg-orange-500' },
-];
-
 const EnsembleFeed: React.FC<EnsembleFeedProps> = ({
   isRunning = false,
   prediction = null,
   gradCAM = null,
-  showGradCAM = false,
+  showGradCAM = false
 }) => {
   const [activeNodes, setActiveNodes] = useState<number[]>([]);
 
   useEffect(() => {
-    if (!isRunning) { setActiveNodes([]); return; }
+    if (!isRunning) {
+      setActiveNodes([]);
+      return;
+    }
+
     const interval = setInterval(() => {
-      setActiveNodes(Array.from({ length: 48 }, () => Math.floor(Math.random() * 48)));
+      const newNodes = Array.from({ length: 48 }, () => Math.floor(Math.random() * 48));
+      setActiveNodes(newNodes);
     }, 200);
+
     return () => clearInterval(interval);
   }, [isRunning]);
 
@@ -38,12 +39,18 @@ const EnsembleFeed: React.FC<EnsembleFeedProps> = ({
           Ensemble Classification Feed
         </h2>
         <div className="flex gap-4">
-          {MODEL_INDICATORS.map(m => (
-            <div key={m.key} className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${m.color} ${prediction ? 'animate-pulse' : 'opacity-40'}`}></div>
-              <span className="text-[9px] text-slate-500">{m.label}</span>
-            </div>
-          ))}
+          <div className="flex items-center gap-2">
+            <div className={`w-2 h-2 rounded-full bg-primary ${prediction ? 'animate-pulse' : 'opacity-40'}`}></div>
+            <span className="text-[9px] text-slate-500">ResNet</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className={`w-2 h-2 rounded-full bg-accent ${prediction ? 'animate-pulse' : 'opacity-40'}`}></div>
+            <span className="text-[9px] text-slate-500">DenseNet</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className={`w-2 h-2 rounded-full bg-emerald-500 ${prediction ? 'animate-pulse' : 'opacity-40'}`}></div>
+            <span className="text-[9px] text-slate-500">EfficientNet</span>
+          </div>
         </div>
       </div>
 
@@ -52,14 +59,19 @@ const EnsembleFeed: React.FC<EnsembleFeedProps> = ({
         <div className="col-span-4 space-y-4">
           {prediction ? (
             prediction.top3.map((c, i) => (
-              <div key={c.label} className="flex flex-col gap-1">
+              <div key={c.label} className="flex flex-col gap-1 group">
                 <div className="flex justify-between items-end">
-                  <span className={`text-xs font-bold ${i === 0 ? 'text-white' : 'text-slate-500'}`}>{c.label}</span>
-                  <span className={`text-xs font-mono ${i === 0 ? 'text-primary' : 'text-slate-600'}`}>{c.confidence.toFixed(1)}%</span>
+                  <span className={`text-xs font-bold transition-colors ${i === 0 ? 'text-white' : 'text-slate-500'}`}>
+                    {c.label}
+                  </span>
+                  <span className={`text-xs font-mono transition-colors ${i === 0 ? 'text-primary' : 'text-slate-600'}`}>
+                    {c.confidence.toFixed(1)}%
+                  </span>
                 </div>
                 <div className="h-2 bg-white/5 rounded-full overflow-hidden">
                   <div
-                    className={`h-full transition-all duration-1000 ${i === 0 ? 'bg-primary' : i === 1 ? 'bg-accent' : 'bg-emerald-500'}`}
+                    className={`h-full transition-all duration-1000 ${i === 0 ? 'bg-primary' : i === 1 ? 'bg-accent' : 'bg-emerald-500'
+                      }`}
                     style={{ width: `${c.confidence}%` }}
                   ></div>
                 </div>
@@ -73,20 +85,28 @@ const EnsembleFeed: React.FC<EnsembleFeedProps> = ({
           )}
         </div>
 
-        {/* Grad-CAM / Attention Map */}
+        {/* Grad-CAM or Attention Map */}
         <div className="col-span-6 bg-background/80 rounded-lg p-3 flex flex-col border border-white/5 relative overflow-hidden">
-          <div className="flex items-center justify-between text-[10px] text-slate-500 mb-2 font-bold uppercase tracking-widest">
+          <div className="flex items-center justify-between text-[10px] text-slate-500 mb-2 font-bold uppercase tracking-widest relative z-10">
             <span>{showGradCAM && gradCAM ? 'GRAD-CAM VISUALIZATION' : 'LAYER ATTENTION MAP'}</span>
             <span className={`material-icons text-xs ${isRunning || gradCAM ? 'text-primary' : ''}`}>visibility</span>
           </div>
+
           {showGradCAM && gradCAM ? (
             <div className="flex-1 flex items-center justify-center">
-              <img src={`data:image/png;base64,${gradCAM.gridImage}`} alt="Grad-CAM" className="max-w-full max-h-full object-contain rounded" />
+              <img
+                src={`data:image/png;base64,${gradCAM.gridImage}`}
+                alt="Grad-CAM"
+                className="max-w-full max-h-full object-contain rounded"
+              />
             </div>
           ) : (
-            <div className="flex-1 grid grid-cols-12 grid-rows-4 gap-1">
+            <div className="flex-1 grid grid-cols-12 grid-rows-4 gap-1 relative z-10">
               {Array.from({ length: 48 }).map((_, i) => (
-                <div key={i} className={`rounded-sm transition-all duration-300 ${activeNodes.includes(i) ? 'bg-primary shadow-[0_0_8px_#135bec]' : 'bg-primary/5'}`}></div>
+                <div
+                  key={i}
+                  className={`rounded-sm transition-all duration-300 ${activeNodes.includes(i) ? 'bg-primary shadow-[0_0_8px_#135bec]' : 'bg-primary/5'}`}
+                ></div>
               ))}
             </div>
           )}
@@ -102,16 +122,8 @@ const EnsembleFeed: React.FC<EnsembleFeedProps> = ({
             {prediction ? `${prediction.confidence.toFixed(1)}% CONF` : 'WAITING...'}
           </div>
           {prediction && (
-            <div className="mt-3 space-y-1">
-              {MODEL_INDICATORS.map((m, i) => {
-                const res = prediction.individualModels?.[m.key];
-                return res ? (
-                  <div key={m.key} className="text-[8px] font-mono text-slate-500">
-                    <span className={`inline-block w-1.5 h-1.5 rounded-full mr-1 ${m.color}`}></span>
-                    {res.confidence.toFixed(1)}%
-                  </div>
-                ) : null;
-              })}
+            <div className="mt-2 text-[8px] text-slate-600 uppercase">
+              Avg Ensemble
             </div>
           )}
         </div>
