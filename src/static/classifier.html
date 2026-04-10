@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Classifier</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <div class="app-container">
+
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <span class="material-icons">scatter_plot</span>
+                </div>
+                <div>
+                    <h1>Galaxy <span class="accent">Classifier</span></h1>
+                    <p class="logo-sub">3-Model Ensemble · 87.97% TTA</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-pill">
+                    <span class="dot dot-green"></span>
+                    <span id="gpu-status">GPU ACTIVE</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="material-icons" style="font-size:14px;color:#94a3b8">speed</span>
+                    <span id="gpu-usage" style="color:#10b981;font-weight:700">--</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main -->
+        <main>
+
+            <!-- Left: Input -->
+            <section class="panel input-panel">
+                <h2 class="section-label">Galaxy Input</h2>
+
+                <div class="upload-area" id="drop-zone">
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <div class="upload-content" id="upload-content">
+                        <div class="upload-icon-wrap">
+                            <span class="material-icons">cloud_upload</span>
+                        </div>
+                        <p>Drop galaxy image here</p>
+                        <p class="upload-sub">or click to browse</p>
+                    </div>
+                    <img id="preview-image" hidden alt="preview">
+                    <div class="scan-line" id="scan-line" hidden></div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn btn-secondary" id="random-btn">
+                        <span class="material-icons">shuffle</span> Random Galaxy
+                    </button>
+                    <button class="btn btn-primary" id="classify-btn" disabled>
+                        <span class="material-icons">play_arrow</span> Run Ensemble
+                    </button>
+                </div>
+
+                <div class="meta-grid">
+                    <div class="meta-cell">
+                        <span class="meta-label">Input Size</span>
+                        <span class="meta-value">224×224</span>
+                    </div>
+                    <div class="meta-cell">
+                        <span class="meta-label">TTA Views</span>
+                        <span class="meta-value accent">8</span>
+                    </div>
+                    <div class="meta-cell">
+                        <span class="meta-label">Normalization</span>
+                        <span class="meta-value ok">ImageNet</span>
+                    </div>
+                    <div class="meta-cell">
+                        <span class="meta-label">Voting</span>
+                        <span class="meta-value ok">Weighted Soft</span>
+                    </div>
+                </div>
+
+                <!-- Sample info -->
+                <div class="sample-info-panel" id="sample-info-panel" hidden>
+                    <div class="sample-row">
+                        <img id="sample-original-image" src="" alt="sample">
+                        <div class="sample-meta">
+                            <div class="smeta-row">
+                                <span>True Label</span>
+                                <span id="sample-class" class="ok">---</span>
+                            </div>
+                            <div class="smeta-row">
+                                <span>File</span>
+                                <span id="sample-source" class="mono-sm">---</span>
+                            </div>
+                            <div class="smeta-row">
+                                <span>Difficulty</span>
+                                <span id="sample-type">---</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right: Results -->
+            <section class="panel results-panel">
+                <h2 class="section-label">Ensemble Analysis</h2>
+
+                <!-- Hero result -->
+                <div class="hero-result">
+                    <div class="orb-wrap">
+                        <div class="orb-ring orb-ring-1"></div>
+                        <div class="orb-ring orb-ring-2"></div>
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            <path class="circle" id="confidence-stroke" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        </svg>
+                        <div class="orb-value">
+                            <span id="confidence-value">0</span><span class="orb-pct">%</span>
+                        </div>
+                    </div>
+                    <div class="hero-label">
+                        <h3 id="prediction-label">AWAITING INPUT</h3>
+                        <p>Ensemble Confidence · 8-view TTA</p>
+                    </div>
+                </div>
+
+                <!-- Validation -->
+                <div class="validation-panel" id="validation-panel" hidden>
+                    <div class="val-row">
+                        <span>Ground Truth</span>
+                        <span id="ground-truth-label" class="ok">---</span>
+                    </div>
+                    <div class="val-row">
+                        <span>Result</span>
+                        <span class="validation-result" id="validation-result">---</span>
+                    </div>
+                </div>
+
+                <!-- 3 Model Cards -->
+                <div class="model-trio">
+                    <div class="model-card" style="--c:#ef4444">
+                        <div class="mc-top">
+                            <div class="mc-orb" style="background:#ef444415;border-color:#ef444440;color:#ef4444">CN</div>
+                            <div>
+                                <div class="mc-name">ConvNeXt-Tiny</div>
+                                <div class="mc-acc">87.97% TTA</div>
+                            </div>
+                            <div class="mc-dot" style="background:#ef4444"></div>
+                        </div>
+                        <div class="mc-bar-wrap">
+                            <div class="mc-bar" id="bar-convnext" style="background:#ef4444;width:0%"></div>
+                        </div>
+                        <div class="mc-bottom">
+                            <span id="lab-pred-convnext" class="mc-pred">---</span>
+                            <span id="lab-score-convnext" class="mc-score" style="color:#ef4444">---</span>
+                        </div>
+                    </div>
+
+                    <div class="model-card" style="--c:#10b981">
+                        <div class="mc-top">
+                            <div class="mc-orb" style="background:#10b98115;border-color:#10b98140;color:#10b981">RX</div>
+                            <div>
+                                <div class="mc-name">ResNeXt-50</div>
+                                <div class="mc-acc">86.40% TTA</div>
+                            </div>
+                            <div class="mc-dot" style="background:#10b981"></div>
+                        </div>
+                        <div class="mc-bar-wrap">
+                            <div class="mc-bar" id="bar-resnext50" style="background:#10b981;width:0%"></div>
+                        </div>
+                        <div class="mc-bottom">
+                            <span id="lab-pred-resnext50" class="mc-pred">---</span>
+                            <span id="lab-score-resnext50" class="mc-score" style="color:#10b981">---</span>
+                        </div>
+                    </div>
+
+                    <div class="model-card" style="--c:#f97316">
+                        <div class="mc-top">
+                            <div class="mc-orb" style="background:#f9731615;border-color:#f9731640;color:#f97316">DN</div>
+                            <div>
+                                <div class="mc-name">DenseNet-161</div>
+                                <div class="mc-acc">86.28% TTA</div>
+                            </div>
+                            <div class="mc-dot" style="background:#f97316"></div>
+                        </div>
+                        <div class="mc-bar-wrap">
+                            <div class="mc-bar" id="bar-densenet161" style="background:#f97316;width:0%"></div>
+                        </div>
+                        <div class="mc-bottom">
+                            <span id="lab-pred-densenet161" class="mc-pred">---</span>
+                            <span id="lab-score-densenet161" class="mc-score" style="color:#f97316">---</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top-3 probabilities -->
+                <div class="top3-section" id="top3-section" hidden>
+                    <h2 class="section-label" style="margin-bottom:0.75rem">Top Predictions</h2>
+                    <div id="top3-bars"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
