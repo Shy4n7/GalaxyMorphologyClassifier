@@ -203,7 +203,7 @@ const App: React.FC = () => {
             <section className="col-span-9 flex flex-col gap-4 overflow-hidden">
               <div className="flex-1 grid grid-cols-4 gap-4 overflow-hidden">
                 {models.map(m => (
-                  <ModelCard key={m.id} model={m} />
+                  <ModelCard key={m.id} model={m} onClick={() => {}} />
                 ))}
               </div>
               <EnsembleFeed isRunning={isRunning} />
