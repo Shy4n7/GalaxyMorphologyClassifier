@@ -2,7 +2,7 @@
 
 Deep learning ensemble for galaxy morphology classification on the Galaxy10 DECaLS dataset.
 
-**87.97% test accuracy** (TTA) on 10 galaxy morphology classes.
+**87.92% macro-average test accuracy** (TTA) on 10 galaxy morphology classes.
 
 ---
 
@@ -28,7 +28,7 @@ Each model trained independently with:
 
 ## Dataset
 
-[Galaxy10 DECaLS](https://astronn.readthedocs.io/en/latest/galaxy10.html) — 17,736 images, 256x256, 10 classes:
+[Galaxy10 DECaLS](https://astronn.readthedocs.io/en/latest/galaxy10.html) — 17,736 images, resized to 224x224, 10 classes:
 
 | Class | Test Acc (TTA) |
 |-------|----------------|
@@ -71,9 +71,9 @@ Weights save to `models/best_v3_{model}_{size}_{timestamp}.pth`.
 
 ## Running
 
-**API server** (port 8000):
+**API server** (port 8080):
 ```bash
-python -m src.api
+python src/inference_server.py
 ```
 
 Loads all 3 ensemble models automatically from `models/`.
@@ -98,7 +98,7 @@ Open `http://localhost:3000`.
 
 ```
 src/
-  api.py                  # FastAPI inference server (port 8000)
+  inference_server.py     # Flask inference server (port 8080)
   train_optimized_v3.py   # Training (all 3 models)
   load_data.py            # HDF5 loading, uint8 RAM caching
 frontend/

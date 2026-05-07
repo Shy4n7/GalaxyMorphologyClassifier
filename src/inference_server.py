@@ -41,7 +41,7 @@ IMG_SIZE    = 224
 DEVICE      = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Weights proportional to TTA test accuracy: ConvNeXt 87.97, ResNeXt 86.40, DenseNet 86.28
-ENSEMBLE_WEIGHTS = [87.97, 86.40, 86.28]
+ENSEMBLE_WEIGHTS = {"convnext": 87.97, "resnext50": 86.40, "densenet161": 86.28}
 
 IMAGENET_MEAN = [0.485, 0.456, 0.406]
 IMAGENET_STD  = [0.229, 0.224, 0.225]
@@ -176,10 +176,10 @@ def predict_ensemble(x: torch.Tensor) -> dict:
 
     all_probs  = []
     model_results = {}
-    weights    = list(ENSEMBLE_WEIGHTS)
 
     with torch.no_grad():
-        for (name, model), w in zip(MODELS.items(), weights):
+        for name, model in MODELS.items():
+            w = ENSEMBLE_WEIGHTS.get(name, 1.0)
             out   = model(tta_batch)                              # (8, 10)
             probs = torch.softmax(out, dim=1).mean(dim=0)        # (10,) TTA average
             probs_np = probs.cpu().numpy()
