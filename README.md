@@ -26,6 +26,54 @@ Each model trained independently with:
 
 ---
 
+## System Architecture
+
+```mermaid
+graph LR
+    subgraph Input
+        A[Galaxy Image from User]
+    end
+
+    subgraph Preparation
+        B[Resize and Normalize Image]
+        C[Create 8 Flipped and Rotated Copies]
+    end
+
+    subgraph Three Trained Models
+        D[Model 1 - ConvNeXt]
+        E[Model 2 - ResNeXt]
+        F[Model 3 - DenseNet]
+    end
+
+    subgraph Combining Results
+        G[Merge All Predictions with Weighted Voting]
+        H[Pick the Galaxy Type with Highest Confidence]
+    end
+
+    A --> B
+    B --> C
+    C --> D
+    C --> E
+    C --> F
+    D --> G
+    E --> G
+    F --> G
+    G --> H
+```
+
+### How It Works
+
+| Step | What Happens |
+|------|--------------|
+| 1 | You upload a photo of a galaxy |
+| 2 | The image is resized and its colors are adjusted so all three models can read it consistently |
+| 3 | Eight slightly different versions of the image are created using flips and rotations, giving each model more angles to consider |
+| 4 | All three models independently look at every version of the image and guess what kind of galaxy it is |
+| 5 | The three sets of guesses are combined — models that have historically been more accurate get a bigger say in the final decision |
+| 6 | The galaxy type with the highest combined confidence score is returned as the final answer |
+
+---
+
 ## Dataset
 
 [Galaxy10 DECaLS](https://astronn.readthedocs.io/en/latest/galaxy10.html) — 17,736 images, resized to 224x224, 10 classes:
