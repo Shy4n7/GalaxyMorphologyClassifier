@@ -1,3 +1,7 @@
+<img width="1774" height="887" alt="ChatGPT Image Aug 20, 2026, 02_46_31 PM" src="https://github.com/user-attachments/assets/8f07238f-e728-4e85-87bf-2568d832b303" />
+
+
+
 # GalaxyClassifier
 
 Deep learning ensemble for galaxy morphology classification on the Galaxy10 DECaLS dataset.
